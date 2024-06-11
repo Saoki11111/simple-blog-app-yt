@@ -4,7 +4,11 @@ import { CreatePost } from "~/app/_components/create-post";
 import { api } from "~/trpc/server";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
+  // const hello = await api.post.hello({ text: "from tRPC" });
+  // console.log(hello.data);
+  const allBlogs = api.example.getAllBlogs.useQuery();
+  console.log(allBlogs.data);
+  console.log("hello");
 
   return (
     <main className="flex min-h-screen bg-gradient-to-b from-[#2e026d] to-[#15162c] py-12 text-white">

@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { db } from "~/server/db"
 
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -24,9 +25,13 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  getLatest: publicProcedure.query(({ ctx }) => {
-    return ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-    });
-  }),
+    getAllBlogs: publicProcedure.query(() => {
+      return db.post.findMany();
+    })
+
+  // getLatest: publicProcedure.query(({ ctx }) => {
+  //   return ctx.db.post.findFirst({
+  //     orderBy: { createdAt: "desc" },
+  //   });
+  // }),
 });
